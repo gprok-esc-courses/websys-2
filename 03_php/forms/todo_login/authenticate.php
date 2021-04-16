@@ -13,6 +13,11 @@ if($result->rowCount() > 0) {
     header("Location: tasks.php");
 }
 else {
+    $error = [
+        'message' => 'Username or password is wrong',
+        'username' => $username,
+    ];
+    $_SESSION['error'] = $error;
     header("Location: login.php");
 }
 
