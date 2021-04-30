@@ -47,7 +47,10 @@ $images_result = $pdo->query("SELECT id, filename, legend
                         <input type="text" name="legend" value="<?=$row['legend'];?>">
                         <input type="submit" value="Update">
                     </p>
-                    <a href="#" class="btn btn-danger">Delete</a>
+                    </form>
+                    <form method="post" action="delete.php">
+                        <input type="text" name="image_id" value="<?=$row['id'];?>" hidden>
+                        <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </div>
             </div>
