@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chuck Norris Jokes</title>
+</head>
+<body>
+    <button onclick="getJoke()">Get Joke</button>
+    <button onclick="saveJoke()">Save</button>
+    <div id="joke"></div>
+    <div id="saved"></div>
+
+    <script>
+        var saved = []
+
+        function getJoke() {
+            fetch('https://api.chucknorris.io/jokes/random')
+                .then(result => result.json())
+                .then(data => document.getElementById('joke').innerHTML = data['value'])
+        }
+
+        function saveJoke() {
+            let currentJoke = document.getElementById('joke').innerHTML
+            if(currentJoke.length > 0) {
+                saved.push(currentJoke)
+                let txt = ''
+                for(let index in saved) {
+                    txt += "<p>" + saved[index] + "</p>"
+                }
+                document.getElementById('saved').innerHTML = txt
+            }
+        }
+    </script>
+
+</body>
+</html>

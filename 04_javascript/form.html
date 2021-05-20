@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form checking</title>
+</head>
+<body>
+    <h3>Username must be at least 8 character long</h3>
+
+    <form method="post" action="counter.html" onsubmit="return evaluateForm()">
+        <input type="text" name="username" id="username" placeholder="Username">
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function evaluateForm() {
+            let username = document.getElementById('username').value
+            if(username.length < 8) {
+                alert("Username has less than 8 characters")
+                return false
+            }
+
+            return true;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Counter</title>
+</head>
+<body>
+    <h1 id="counter_label">0</h1>
+
+    <button onclick="increase()">Increase</button>
+    <button onclick="decrease()">Decrease</button>
+
+    <script>
+        function increase() {
+            let value = document.getElementById("counter_label").innerText
+            value++
+            document.getElementById("counter_label").innerText = value
+        }
+        function decrease() {
+            let value = document.getElementById("counter_label").innerText
+            value--
+            document.getElementById("counter_label").innerText = value
+        }
+    </script>
+
+</body>
+</html>
