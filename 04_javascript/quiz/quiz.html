@@ -29,24 +29,46 @@
 
         function startQuiz() {
             currentQuestion = 0
+            score = 0
+            document.getElementById('score').innerHTML = ''
             displayQuestion()
         }
 
         function displayQuestion() {
             let txt = ''
             txt = questions[currentQuestion].question
+            txt += '<br><input type="radio" name="answer" value="' +
+                questions[currentQuestion].correct_answer + '">' +
+                questions[currentQuestion].correct_answer
+            for(let i = 0; i < questions[currentQuestion].incorrect_answers.length; i++) {
+                txt += '<br><input type="radio" name="answer" value="' +
+                    questions[currentQuestion].incorrect_answers[i] +
+                    '">' + questions[currentQuestion].incorrect_answers[i]
+            }
             txt += '<br><button onclick="checkResponse()">Submit</button>'
             document.getElementById('quiz').innerHTML = txt
         }
 
         function checkResponse() {
+            // get the user's response
+            let answers = document.getElementsByName('answer')
+            for(let i = 0; i < answers.length; i++) {
+                if(answers[i].checked) {
+                    console.log(answers[i].value)
+                    if(answers[i].value == questions[currentQuestion].correct_answer) {
+                        score++
+                    }
+                    break;
+                }
+            }
+            // check if is the correct answer and if yes, increase score
             currentQuestion++
             if(currentQuestion < 10) {
                 displayQuestion()
             }
             else {
                 document.getElementById('quiz').innerHTML = ''
-                document.getElementById('score').innerHTML = "<h1>Score</h1>"
+                document.getElementById('score').innerHTML = "<h1>Score: " + score + "/10</h1>"
             }
         }
 
