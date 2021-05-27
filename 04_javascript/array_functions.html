@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Array Functions</title>
+</head>
+<body>
+    <div><ul id="student-names"></ul></div>
+
+    <script>
+        let students = [
+            {'name': 'Bob Noyce', 'major': 'Computer Science', 'credits': 24},
+            {'name': 'Sigmund Froyd', 'major': 'Psychology', 'credits': 36},
+            {'name': 'Lee Iacocca', 'major': 'Management', 'credits': 22},
+            {'name': 'Ada Lovelace', 'major': 'Computer Science', 'credits': 40},
+            {'name': 'Henry Ford', 'major': 'Management', 'credits': 23},
+            {'name': 'Carl Jung', 'major': 'Psychology', 'credits': 14},
+            {'name': 'Charles Babbage', 'major': 'Computer Science', 'credits': 34},
+        ];
+
+        // students.forEach(function(student) {
+        //     console.log(student.name)
+        // })
+        let txt = ''
+        students.forEach(student => console.log(student.name))
+        students.forEach(student => txt += '<li>' + student.name + '</li>')
+        document.getElementById('student-names').innerHTML = txt
+
+        students.map(student => {
+            if(student.major == 'Computer Science') {
+                student.credits += 4
+            }
+            return student
+        })
+        console.log(students)
+
+
+        let names = ''
+        for(let i = 0; i < students.length; i++) {
+            if(i == students.length - 1) {
+                names += students[i].name
+            }
+            else {
+                names += students[i].name + ','
+            }
+        }
+        console.log(names)
+
+        names = students.map(student => {
+            return student.name
+        }).join(',')
+        console.log(names)
+
+        let cdStudents = students.filter(student => { return student.major == 'Computer Science' })
+        console.log(cdStudents)
+
+        let studentsInMajor = students.reduce((totals, student) => {
+            let major = student.major
+            if(!totals[major]) {
+                totals[major] = 1
+            }
+            else {
+                totals[major]++
+            }
+            return totals
+        }, {})
+        console.log(studentsInMajor)
+
+        let lessThan20credit = students.some(student => student['credits'] < 30)
+        console.log(lessThan20credit)
+
+    </script>
+
+
+</body>
+</html>
