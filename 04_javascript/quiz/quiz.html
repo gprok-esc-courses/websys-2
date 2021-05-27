@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+</head>
+<body>
+    <div id="start_button">
+        <button id="start" onclick="loadData()">Start Quiz</button>
+    </div>
+    <div id="quiz"></div>
+    <div id="score"></div>
+
+
+    <script>
+        var questions
+        var score = 0
+        var currentQuestion = 0
+
+        function loadData() {
+            fetch('https://opentdb.com/api.php?amount=10')
+                .then(response => response.json())
+                .then(data => {
+                    questions = data.results
+                    console.log(questions)
+                    startQuiz()
+                })
+        }
+
+        function startQuiz() {
+            currentQuestion = 0
+            displayQuestion()
+        }
+
+        function displayQuestion() {
+            let txt = ''
+            txt = questions[currentQuestion].question
+            txt += '<br><button onclick="checkResponse()">Submit</button>'
+            document.getElementById('quiz').innerHTML = txt
+        }
+
+        function checkResponse() {
+            currentQuestion++
+            if(currentQuestion < 10) {
+                displayQuestion()
+            }
+            else {
+                document.getElementById('quiz').innerHTML = ''
+                document.getElementById('score').innerHTML = "<h1>Score</h1>"
+            }
+        }
+
+
+    </script>
+
+</body>
+</html>
