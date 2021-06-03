@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>Quiz</title>
 </head>
-<body>
+<body onload="loadCategories()">
     <div id="start_button">
+        <input type="text" id="username" size="10" placeholder="username" />
+        <select id="categories"></select>
         <button id="start" onclick="loadData()">Start Quiz</button>
     </div>
     <div id="quiz"></div>
@@ -16,9 +18,23 @@
         var questions
         var score = 0
         var currentQuestion = 0
+        var totalQuestions = 10;
+
+        function loadCategories() {
+            fetch('https://opentdb.com/api_category.php')
+                .then(response => response.json())
+                .then(data => {
+                    let txt = ''
+                    let categories = data.trivia_categories
+                    categories.forEach(category => txt += "<option value='" + category.id + "'>" + category.name + "</option>")
+                    document.getElementById("categories").innerHTML = txt
+                })
+        }
 
         function loadData() {
-            fetch('https://opentdb.com/api.php?amount=10')
+            let catId = document.getElementById("categories").value
+            console.log(catId)
+            fetch('https://opentdb.com/api.php?amount=' + totalQuestions + '&category=' + catId)
                 .then(response => response.json())
                 .then(data => {
                     questions = data.results
@@ -74,13 +90,28 @@
             }
             // check if is the correct answer and if yes, increase score
             currentQuestion++
-            if(currentQuestion < 10) {
+            if(currentQuestion < totalQuestions) {
                 displayQuestion()
             }
             else {
                 document.getElementById('quiz').innerHTML = ''
                 document.getElementById('score').innerHTML = "<h1>Score: " + score + "/10</h1>"
+                saveScore();
             }
+        }
+
+        function saveScore() {
+            let username = document.getElementById("username").value
+            let catId = document.getElementById("categories").value
+            fetch('http://localhost/websys2/04_javascript/quiz/save_score.php', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({score: score, username: username, category_id: catId})
+            }).then(response => response.json())
+            .then(data => console.log(data))
         }
 
 
