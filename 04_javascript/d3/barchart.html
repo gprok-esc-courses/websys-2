@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bar Chart</title>
+    <style>
+        .chart div {
+            background-color: green;
+            padding: 5px;
+            margin: 1px;
+            color: lightcyan;
+            text-align: right;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chart"></div>
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script>
+        var data = [35, 89, 156, 280, 318, 350]
+
+        d3.select(".chart")
+            .selectAll("div")
+            .data(data)
+                .enter()
+                .append("div")
+                .style("width", (d) => { return d + "px" })
+                .text((d) => { return '$'+d })
+    </script>
+
+</body>
+</html>
